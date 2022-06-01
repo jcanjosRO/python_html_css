@@ -23,6 +23,20 @@ def depois_requisicao(e):
 
 @app.route("/")
 def exibir_entradas():
-    nome = "Jean"
-    return render_template("hello.html")
+    sql = "SELECT titulo, texto, criado_em FROM entradas ORDER BY id DESC;"    
+    cur = g.bd.execute(sql)
+    entradas = []
+    for titulo, texto, criado_em in cur.fetchall(): 
+        entradas.append({"titulo": titulo, "texto": texto, "criado_em": criado_em})
+    return render_template("exibir_entradas.html", entradas=entradas)
 
+@app.route('/login')
+def login():
+    
+    return render_template("login.html")
+
+
+@app.route('/logout')
+def logout():
+
+    return render_tremplate("logout.html")
